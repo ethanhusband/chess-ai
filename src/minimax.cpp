@@ -1,6 +1,5 @@
-#include "minimax.h"
-#include "eval.h"
-#include "board.h"
+#include "minimax.hpp"
+#include "eval.hpp"
 #include <limits.h>
 #include <algorithm>
 
@@ -28,7 +27,7 @@ Node *minimax(Root root)
     for (int i = 0; i < root->n; i++)
     {
 
-        float move_score = alphabeta(root, i);
+        float move_score = alphaBeta(root, i);
         // Make this move the choice if it is highest for MAX, or lowest for MIN
         if ((root->turn && move_score > best_eval) || (!root->turn && move_score < best_eval))
         {
@@ -38,7 +37,7 @@ Node *minimax(Root root)
     }
 }
 
-float alphabeta(Root root, int depth)
+float alphaBeta(Root root, int depth)
 {
     // Decide whether to cutoff or expand
     if (depth = 0 || depth == CUTOFF_DEPTH)
@@ -55,7 +54,7 @@ float alphabeta(Root root, int depth)
         float value = INT_MIN;
         for (int i = 0; i < root->n; i++)
         {
-            value = max(value, alphabeta(root->children[i], depth + 1));
+            value = max(value, alphaBeta(root->children[i], depth + 1));
             if (value > root->data.beta)
             {
                 break; // Beta cutoff
@@ -69,7 +68,7 @@ float alphabeta(Root root, int depth)
         float value = INT_MAX;
         for (int i = 0; i < root->n; i++)
         {
-            value = min(value, alphabeta(root->children[i], depth + 1));
+            value = min(value, alphaBeta(root->children[i], depth + 1));
             if (value > root->data.alpha)
             {
                 break; // Alpha cutoff
@@ -78,4 +77,10 @@ float alphabeta(Root root, int depth)
         }
         return value;
     }
+}
+
+void generateChildren(Node *node)
+{
+    // Identify each piece in the board which is that of the current turn
+    // Generate moves for that piece via a map which returns a set of functions for a given piece
 }
