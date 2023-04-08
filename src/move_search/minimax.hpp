@@ -1,4 +1,8 @@
-#include "board.hpp"
+#include "bitboard.hpp"
+#include "charboard.hpp"
+
+// USE THIS TO CHANGE INTERNAL REPRESENTATION
+typedef CB Board;
 
 // Structure to represent a node in a tree
 struct Node
